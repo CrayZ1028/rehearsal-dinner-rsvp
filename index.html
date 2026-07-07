@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mathew & Savannah's Rehearsal Dinner — Meal Choices</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;1,500;1,600&family=Karla:wght@400;500;700&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --charcoal:#2b2420;
+    --ember:#c1502e;
+    --ember-dark:#a13f22;
+    --linen:#f7f0e4;
+    --linen-dim:#efe6d4;
+    --brass:#b8925a;
+    --pine:#445940;
+    --card-bg:#fffaf1;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--linen);
+    color:var(--charcoal);
+    font-family:'Karla',sans-serif;
+    line-height:1.5;
+  }
+  .wrap{max-width:640px;margin:0 auto;padding:0 20px 60px;}
+
+  /* ---- Header ---- */
+  header{
+    background:var(--charcoal);
+    color:var(--linen);
+    text-align:center;
+    padding:52px 20px 40px;
+    position:relative;
+    overflow:hidden;
+  }
+  .smoke{
+    position:absolute;
+    top:-40px;
+    left:50%;
+    transform:translateX(-50%);
+    width:220px;
+    height:160px;
+    opacity:0.18;
+    pointer-events:none;
+  }
+  .eyebrow{
+    font-family:'Oswald',sans-serif;
+    font-size:12px;
+    letter-spacing:0.35em;
+    text-transform:uppercase;
+    color:var(--brass);
+    margin:0 0 14px;
+    position:relative;
+  }
+  .couple-names{
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;
+    font-weight:600;
+    font-size:56px;
+    line-height:1;
+    margin:0 0 12px;
+    position:relative;
+  }
+  .details{
+    font-family:'Oswald',sans-serif;
+    font-size:13px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--linen-dim);
+    margin:0;
+    position:relative;
+  }
+  .details span{color:var(--brass);}
+
+  /* ---- Wood grain divider ---- */
+  .grain-divider{
+    height:14px;
+    background:repeating-linear-gradient(
+      90deg,
+      var(--brass) 0px, var(--brass) 2px,
+      transparent 2px, transparent 14px
+    );
+    opacity:0.55;
+  }
+
+  /* ---- Intro note ---- */
+  .intro{
+    text-align:center;
+    padding:34px 10px 10px;
+  }
+  .intro h2{
+    font-family:'Oswald',sans-serif;
+    font-size:19px;
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+    margin:0 0 10px;
+  }
+  .intro p{
+    font-size:15px;
+    color:#5a5048;
+    max-width:480px;
+    margin:0 auto;
+  }
+
+  /* ---- Section ---- */
+  .section{margin-top:38px;}
+  .section-label{
+    font-family:'Oswald',sans-serif;
+    font-size:12px;
+    letter-spacing:0.28em;
+    text-transform:uppercase;
+    color:var(--ember-dark);
+    margin:0 0 6px;
+  }
+  .section-title{
+    font-family:'Oswald',sans-serif;
+    font-size:22px;
+    font-weight:600;
+    margin:0 0 18px;
+  }
+
+  /* ---- Guest name field ---- */
+  .field{margin-bottom:22px;}
+  label.simple{
+    display:block;
+    font-family:'Oswald',sans-serif;
+    font-size:13px;
+    letter-spacing:0.05em;
+    text-transform:uppercase;
+    color:var(--charcoal);
+    margin-bottom:8px;
+  }
+  input[type=text], select, textarea{
+    width:100%;
+    padding:14px 16px;
+    font-family:'Karla',sans-serif;
+    font-size:16px;
+    border:2px solid #ddd0ba;
+    border-radius:6px;
+    background:var(--card-bg);
+    color:var(--charcoal);
+    appearance:none;
+  }
+  select{
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%232b2420'%3E%3Cpath d='M5.5 7.5l4.5 5 4.5-5z'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;
+    background-position:right 14px center;
+    padding-right:40px;
+  }
+  input:focus, select:focus, textarea:focus{
+    outline:none;
+    border-color:var(--ember);
+  }
+  textarea{resize:vertical;min-height:70px;}
+
+  /* ---- Meat cards ---- */
+  .meat-grid{display:grid;grid-template-columns:1fr;gap:12px;}
+  .meat-card{
+    position:relative;
+    display:flex;
+    align-items:center;
+    gap:16px;
+    border:2px solid #ddd0ba;
+    border-radius:8px;
+    background:var(--card-bg);
+    padding:16px 18px;
+    cursor:pointer;
+    transition:border-color .15s ease, background .15s ease;
+  }
+  .meat-card:hover{border-color:var(--brass);}
+  .meat-card input{position:absolute;opacity:0;width:0;height:0;}
+  .brand-mark{
+    flex:0 0 auto;
+    width:36px;height:36px;
+    border-radius:50%;
+    border:2.5px solid var(--charcoal);
+    display:flex;align-items:center;justify-content:center;
+    transition:background .15s ease, border-color .15s ease;
+  }
+  .brand-mark svg{width:16px;height:16px;opacity:0;transition:opacity .1s ease;}
+  .meat-card .name{
+    font-family:'Oswald',sans-serif;
+    font-size:17px;
+    font-weight:600;
+    letter-spacing:0.02em;
+  }
+  .meat-card input:checked ~ .brand-mark{
+    background:var(--ember);
+    border-color:var(--ember);
+  }
+  .meat-card input:checked ~ .brand-mark svg{opacity:1;}
+  .meat-card.selected{
+    border-color:var(--ember);
+    background:#fff3ea;
+  }
+
+  /* ---- Sub option (ranch/butter) ---- */
+  .sub-option{
+    margin-top:10px;
+    padding:14px 16px;
+    background:var(--linen-dim);
+    border-radius:6px;
+    border-left:3px solid var(--brass);
+    display:none;
+  }
+  .sub-option.active{display:block;}
+  .sub-option .sub-label{
+    font-family:'Oswald',sans-serif;
+    font-size:11px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:#6b5f52;
+    margin-bottom:8px;
+  }
+  .pill-row{display:flex;gap:10px;flex-wrap:wrap;}
+  .pill{
+    position:relative;
+  }
+  .pill input{position:absolute;opacity:0;width:0;height:0;}
+  .pill label{
+    display:inline-block;
+    padding:8px 16px;
+    font-size:13.5px;
+    font-family:'Karla',sans-serif;
+    font-weight:700;
+    border:2px solid #ddd0ba;
+    border-radius:30px;
+    background:#fff;
+    cursor:pointer;
+    transition:all .15s ease;
+  }
+  .pill input:checked + label{
+    border-color:var(--pine);
+    background:var(--pine);
+    color:#fff;
+  }
+
+  /* ---- Notes ---- */
+  .note-box{
+    background:#fff3ea;
+    border:1px dashed var(--brass);
+    border-radius:6px;
+    padding:14px 16px;
+    font-size:13.5px;
+    color:#6b5033;
+    margin-top:6px;
+  }
+
+  /* ---- Submit ---- */
+  .submit-wrap{margin-top:44px;text-align:center;}
+  button[type=submit]{
+    font-family:'Oswald',sans-serif;
+    font-size:15px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    font-weight:600;
+    color:var(--linen);
+    background:var(--ember);
+    border:none;
+    padding:17px 44px;
+    border-radius:6px;
+    cursor:pointer;
+    transition:background .15s ease, transform .1s ease;
+    width:100%;
+  }
+  button[type=submit]:hover{background:var(--ember-dark);}
+  button[type=submit]:active{transform:scale(0.98);}
+  button[type=submit]:disabled{opacity:0.6;cursor:default;}
+  .fine-print{
+    font-size:12px;
+    color:#8a7f72;
+    margin-top:14px;
+  }
+
+  /* ---- Success / error state ---- */
+  #formArea.hidden{display:none;}
+  .status-panel{
+    display:none;
+    text-align:center;
+    padding:70px 20px;
+  }
+  .status-panel.active{display:block;}
+  .status-panel .stamp{
+    display:inline-flex;
+    align-items:center;justify-content:center;
+    width:74px;height:74px;
+    border-radius:50%;
+    background:var(--pine);
+    color:#fff;
+    margin-bottom:22px;
+  }
+  .status-panel h2{
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;
+    font-size:32px;
+    margin:0 0 10px;
+  }
+  .status-panel p{color:#5a5048;font-size:15px;}
+  .error-panel .stamp{background:var(--ember);}
+
+  footer{
+    text-align:center;
+    padding:26px 20px 40px;
+    font-family:'Oswald',sans-serif;
+    font-size:11px;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    color:#a8998a;
+  }
+
+  @media (min-width:480px){
+    .couple-names{font-size:64px;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <svg class="smoke" viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg">
+    <path d="M100 160 C 90 130, 115 120, 100 95 C 88 75, 112 60, 98 35 C 88 15, 108 5, 100 -10"
+          stroke="#f7f0e4" stroke-width="6" fill="none" stroke-linecap="round"/>
+  </svg>
+  <p class="eyebrow">Rehearsal Dinner &middot; The Pit Backyard BBQ</p>
+  <h1 class="couple-names">Mathew &amp; Savannah</h1>
+  <p class="details">July 30, 2026 <span>&bull;</span> Southport, NC <span>&bull;</span> 503 Olde Waterford Way, Leland</p>
+</header>
+<div class="grain-divider"></div>
+
+<div class="wrap">
+
+  <div class="intro">
+    <h2>Tell us how you take your BBQ</h2>
+    <p>We're gathering at The Pit the night before the big day — pick your meat and two sides below so we can have your plate ready.</p>
+  </div>
+
+  <form id="mealForm">
+
+    <div class="section">
+      <p class="section-label">Step One</p>
+      <p class="section-title">Your Name</p>
+      <div class="field">
+        <label class="simple" for="guestName">Full name</label>
+        <input type="text" id="guestName" name="Guest Name" required placeholder="e.g. Aunt Debbie Cray">
+      </div>
+    </div>
+
+    <div class="section">
+      <p class="section-label">Step Two</p>
+      <p class="section-title">Choose Your Meat</p>
+      <div class="meat-grid" id="meatGrid">
+        <label class="meat-card" data-card>
+          <input type="radio" name="Meat" value="BBQ" required>
+          <span class="brand-mark"><svg viewBox="0 0 20 20" fill="none"><path d="M4 10l4 4 8-9" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="name">Pulled BBQ</span>
+        </label>
+        <label class="meat-card" data-card>
+          <input type="radio" name="Meat" value="Brisket" required>
+          <span class="brand-mark"><svg viewBox="0 0 20 20" fill="none"><path d="M4 10l4 4 8-9" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="name">Brisket</span>
+        </label>
+        <label class="meat-card" data-card>
+          <input type="radio" name="Meat" value="Smoked Chicken" required>
+          <span class="brand-mark"><svg viewBox="0 0 20 20" fill="none"><path d="M4 10l4 4 8-9" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="name">Smoked Chicken</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="section">
+      <p class="section-label">Step Three</p>
+      <p class="section-title">Pick Two Sides</p>
+
+      <div class="field">
+        <label class="simple" for="side1">First side</label>
+        <select id="side1" name="Side 1" required>
+          <option value="" disabled selected>Select a side&hellip;</option>
+        </select>
+        <div class="sub-option" id="side1-buffalo">
+          <p class="sub-label">Buffalo Chips &mdash; ranch style</p>
+          <div class="pill-row">
+            <span class="pill"><input type="radio" name="Side 1 Buffalo Chips Style" id="s1bc-r" value="Regular Ranch"><label for="s1bc-r">Regular</label></span>
+            <span class="pill"><input type="radio" name="Side 1 Buffalo Chips Style" id="s1bc-s" value="Spicy Ranch"><label for="s1bc-s">Spicy</label></span>
+          </div>
+        </div>
+        <div class="sub-option" id="side1-hushpuppy">
+          <p class="sub-label">Hush Puppies &mdash; butter style</p>
+          <div class="pill-row">
+            <span class="pill"><input type="radio" name="Side 1 Hush Puppies Style" id="s1hp-r" value="Regular Butter"><label for="s1hp-r">Regular</label></span>
+            <span class="pill"><input type="radio" name="Side 1 Hush Puppies Style" id="s1hp-c" value="Cinnamon Butter"><label for="s1hp-c">Cinnamon</label></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="simple" for="side2">Second side</label>
+        <select id="side2" name="Side 2" required>
+          <option value="" disabled selected>Select a side&hellip;</option>
+        </select>
+        <div class="sub-option" id="side2-buffalo">
+          <p class="sub-label">Buffalo Chips &mdash; ranch style</p>
+          <div class="pill-row">
+            <span class="pill"><input type="radio" name="Side 2 Buffalo Chips Style" id="s2bc-r" value="Regular Ranch"><label for="s2bc-r">Regular</label></span>
+            <span class="pill"><input type="radio" name="Side 2 Buffalo Chips Style" id="s2bc-s" value="Spicy Ranch"><label for="s2bc-s">Spicy</label></span>
+          </div>
+        </div>
+        <div class="sub-option" id="side2-hushpuppy">
+          <p class="sub-label">Hush Puppies &mdash; butter style</p>
+          <div class="pill-row">
+            <span class="pill"><input type="radio" name="Side 2 Hush Puppies Style" id="s2hp-r" value="Regular Butter"><label for="s2hp-r">Regular</label></span>
+            <span class="pill"><input type="radio" name="Side 2 Hush Puppies Style" id="s2hp-c" value="Cinnamon Butter"><label for="s2hp-c">Cinnamon</label></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="note-box">Every plate comes with a drink &mdash; no need to choose one.</div>
+    </div>
+
+    <div class="section">
+      <p class="section-label">Optional</p>
+      <p class="section-title">Allergies or Notes</p>
+      <div class="field">
+        <textarea name="Notes" placeholder="Let us know about any allergies or dietary needs"></textarea>
+      </div>
+    </div>
+
+    <div class="submit-wrap">
+      <button type="submit" id="submitBtn">Reserve My Plate</button>
+      <p class="fine-print">Please submit by [add your RSVP deadline here].</p>
+    </div>
+  </form>
+
+  <div class="status-panel" id="successPanel">
+    <div class="stamp">
+      <svg width="30" height="30" viewBox="0 0 20 20" fill="none"><path d="M4 10l4 4 8-9" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <h2>You're on the list</h2>
+    <p>Thanks for letting us know &mdash; we'll see you at The Pit!</p>
+  </div>
+
+  <div class="status-panel error-panel" id="errorPanel">
+    <div class="stamp">!</div>
+    <h2>Something went wrong</h2>
+    <p>Your choices didn't go through. Please try submitting again in a moment.</p>
+  </div>
+
+</div>
+
+<footer>Mathew &amp; Savannah &middot; July 30, 2026</footer>
+
+<script>
+  const SIDES = [
+    "White Slaw","Potato Salad","Baked Beans","Buffalo Chips","Hush Puppies",
+    "Fried Okra","Cornbread","Mac & Cheese","Collards","Green Beans",
+    "Seasoned Fries","Sweet Potato Fries","Backyard Chili"
+  ];
+
+  const side1El = document.getElementById('side1');
+  const side2El = document.getElementById('side2');
+
+  function populate(select, excludeValue){
+    const current = select.value;
+    select.innerHTML = '<option value="" disabled' + (current ? '' : ' selected') + '>Select a side&hellip;</option>';
+    SIDES.forEach(s => {
+      if(s === excludeValue) return;
+      const opt = document.createElement('option');
+      opt.value = s; opt.textContent = s;
+      if(s === current) opt.selected = true;
+      select.appendChild(opt);
+    });
+  }
+
+  populate(side1El, null);
+  populate(side2El, null);
+
+  function toggleSub(selectEl, prefix){
+    const val = selectEl.value;
+    const buffalo = document.getElementById(prefix + '-buffalo');
+    const hush = document.getElementById(prefix + '-hushpuppy');
+    buffalo.classList.toggle('active', val === 'Buffalo Chips');
+    hush.classList.toggle('active', val === 'Hush Puppies');
+    // clear required sub-radio enforcement handled at submit time
+  }
+
+  side1El.addEventListener('change', () => {
+    toggleSub(side1El, 'side1');
+    populate(side2El, side1El.value);
+  });
+  side2El.addEventListener('change', () => {
+    toggleSub(side2El, 'side2');
+    populate(side1El, side2El.value);
+  });
+
+  // Meat card highlight
+  document.querySelectorAll('.meat-card').forEach(card => {
+    const input = card.querySelector('input');
+    input.addEventListener('change', () => {
+      document.querySelectorAll('.meat-card').forEach(c => c.classList.remove('selected'));
+      card.classList.add('selected');
+    });
+  });
+
+  // Form submission via Formspree
+  const form = document.getElementById('mealForm');
+  const submitBtn = document.getElementById('submitBtn');
+
+  form.addEventListener('submit', async function(e){
+    e.preventDefault();
+
+    // enforce sub-choice requirements
+    const checks = [
+      {select: side1El, prefix: 'side1'},
+      {select: side2El, prefix: 'side2'}
+    ];
+    for(const c of checks){
+      if(c.select.value === 'Buffalo Chips'){
+        if(!form.querySelector(`input[name="${c.prefix === 'side1' ? 'Side 1' : 'Side 2'} Buffalo Chips Style"]:checked`)){
+          alert('Please choose regular or spicy ranch for your Buffalo Chips.');
+          return;
+        }
+      }
+      if(c.select.value === 'Hush Puppies'){
+        if(!form.querySelector(`input[name="${c.prefix === 'side1' ? 'Side 1' : 'Side 2'} Hush Puppies Style"]:checked`)){
+          alert('Please choose regular or cinnamon butter for your Hush Puppies.');
+          return;
+        }
+      }
+    }
+    if(side1El.value === side2El.value){
+      alert('Please choose two different sides.');
+      return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending…';
+
+    const formData = new FormData(form);
+
+    try{
+      // ⚠️ Replace YOUR_FORM_ID below with your real Formspree form ID
+      const response = await fetch('https://formspree.io/f/xkolabga', {
+        method: 'POST',
+        headers: {'Accept': 'application/json'},
+        body: formData
+      });
+
+      if(response.ok){
+        document.getElementById('mealForm').closest('.wrap').querySelector('.intro').style.display = 'none';
+        form.classList.add('hidden');
+        document.getElementById('successPanel').classList.add('active');
+      } else {
+        document.getElementById('errorPanel').classList.add('active');
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Reserve My Plate';
+      }
+    } catch(err){
+      document.getElementById('errorPanel').classList.add('active');
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Reserve My Plate';
+    }
+  });
+</script>
+
+</body>
+</html>

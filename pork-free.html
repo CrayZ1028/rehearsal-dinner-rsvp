@@ -541,22 +541,18 @@
     const formData = new FormData(form);
 
     try{
-      // ⚠️ Replace YOUR_FORM_ID below with your real Formspree form ID
-      const response = await fetch('https://formspree.io/f/xkolabga', {
+      // Google Apps Script web app endpoint
+      await fetch('https://script.google.com/macros/s/AKfycbxtRAFBkBJILv_gdSYRIx70oP0rNo55gyKNv8GyF-hwM7xnTcTXr-aHxtV1eRRhMCKZ/exec', {
         method: 'POST',
-        headers: {'Accept': 'application/json'},
+        mode: 'no-cors',
         body: formData
       });
 
-      if(response.ok){
-        document.getElementById('mealForm').closest('.wrap').querySelector('.intro').style.display = 'none';
-        form.classList.add('hidden');
-        document.getElementById('successPanel').classList.add('active');
-      } else {
-        document.getElementById('errorPanel').classList.add('active');
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'Reserve My Plate';
-      }
+      // Apps Script responses are opaque under no-cors, so we treat a completed
+      // request (no thrown error) as success.
+      document.getElementById('mealForm').closest('.wrap').querySelector('.intro').style.display = 'none';
+      form.classList.add('hidden');
+      document.getElementById('successPanel').classList.add('active');
     } catch(err){
       document.getElementById('errorPanel').classList.add('active');
       submitBtn.disabled = false;
